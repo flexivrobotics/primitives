@@ -254,8 +254,9 @@ specify the maximum velocity and acceleration of the TCP for the robot to move.
 |maxAcc|DOUBLE|maximum Cartesian linear acceleration|
 |maxRotAcc|DOUBLE|maximum Cartesian angular acceleration|
 |blendRadiusLevel|INT|blend radius level approaching waypoints|
-|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
 |preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|nullspaceGradientScaling|VEC_3d|nullspace optmization objective gradient scaling. (linear manipulability, angular manipulability, preferJntPos error norm)|
   
 Below is the detailed description of each parameter:
 |par_name|target|
@@ -328,13 +329,13 @@ Below is the detailed description of each parameter:
 
 |par_name|targetTolLevel|
 | :---: | :---: |
-|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_desc|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
 |par_type|INT|
 |par_unit|$none$|
 |par_required|0|
 |par_default|3|
 |par_max|10|
-|par_min|1|
+|par_min|0|
 
 |par_name|preferJntPos|
 | :---: | :---: |
@@ -346,6 +347,16 @@ Below is the detailed description of each parameter:
 |par_max|160 130 170 154 170 260 170|
 |par_min|-160 -130 -170 -107 -170 -80 -170|
 |par_freedrive|1|
+
+|par_name|nullspaceGradientScaling|
+| :---: | :---: |
+|par_desc|nullspace optmization objective gradient scaling. (linear manipulability, angular manipulability, preferJntPos error norm)|
+|par_type|VEC_3d|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0 0.0 1.0|
+|par_max|5.0 5.0 5.0|
+|par_min|0.0 0.0 1.0|
 
 #### Primitive State Parameters
 
@@ -370,8 +381,7 @@ Below is the detailed description of each parameter:
 ### [MovePTP](#moveptp)
 
 
-This primitive is used to move the TCP of the robot to a target pose while passing through various waypoints. User can 
-specify the maximum velocity and acceleration of the TCP for the robot to move.  
+Move in joint space which passes through the waypoints and target tcp pose specified by user.  
 
 
 #### Primitive Description and Usage
@@ -391,7 +401,7 @@ specify the maximum velocity and acceleration of the TCP for the robot to move.
 |maxJntVel|VEC_7d|maximum joint velocity for each joint|
 |maxJntAcc|VEC_7d|maximum joint acceleration for each joint|
 |waypoints|ARRAY_COORD|waypoints between initial and target poses|
-|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
 |preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
   
 Below is the detailed description of each parameter:
@@ -435,13 +445,13 @@ Below is the detailed description of each parameter:
 
 |par_name|targetTolLevel|
 | :---: | :---: |
-|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_desc|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
 |par_type|INT|
 |par_unit|$none$|
 |par_required|0|
 |par_default|1|
 |par_max|10|
-|par_min|1|
+|par_min|0|
 
 |par_name|preferJntPos|
 | :---: | :---: |
@@ -618,6 +628,7 @@ Move along a circular path described in Cartesian space which passes through the
 |equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
 |targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
 |preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|nullspaceGradientScaling|VEC_3d|nullspace optmization objective gradient scaling. (linear manipulability, angular manipulability, preferJntPos error norm)|
   
 Below is the detailed description of each parameter:
 |par_name|target|
@@ -699,6 +710,16 @@ Below is the detailed description of each parameter:
 |par_min|-160 -130 -170 -107 -170 -80 -170|
 |par_freedrive|1|
 
+|par_name|nullspaceGradientScaling|
+| :---: | :---: |
+|par_desc|nullspace optmization objective gradient scaling. (linear manipulability, angular manipulability, preferJntPos error norm)|
+|par_type|VEC_3d|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0 0.0 1.0|
+|par_max|5.0 5.0 5.0|
+|par_min|0.0 0.0 1.0|
+
 #### Primitive State Parameters
 
 |State Parameter Name(par_name)|Type|Description|
@@ -734,7 +755,7 @@ specified by user.
 |maxJntAcc|VEC_7d|maximum joint acceleration for each joint|
 |waypoints|ARRAY_VEC_7d|waypoints joint position|
 |relativeToStart|BOOL|Enable relative target pose mode|
-|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
   
 Below is the detailed description of each parameter:
 |par_name|target|
@@ -787,13 +808,13 @@ Below is the detailed description of each parameter:
 
 |par_name|targetTolLevel|
 | :---: | :---: |
-|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_desc|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
 |par_type|INT|
 |par_unit|$none$|
 |par_required|0|
 |par_default|1|
 |par_max|10|
-|par_min|1|
+|par_min|0|
 
 #### Primitive State Parameters
 
@@ -850,6 +871,7 @@ next waypoint
 |maxJerk|DOUBLE|maximum jerk along the path|
 |maxCornerAcc|DOUBLE|maximum acceleration at corner|
 |maxCornerJerk|DOUBLE|maximum jerk at corner|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
 |preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
   
 Below is the detailed description of each parameter:
@@ -973,6 +995,16 @@ Below is the detailed description of each parameter:
 |par_max|10000.0|
 |par_min|10.0|
 
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 0 to 10, where 1 is the smallest tolerence, 0 means no tolerance check|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|10|
+|par_min|1|
+
 |par_name|preferJntPos|
 | :---: | :---: |
 |par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
@@ -1040,13 +1072,16 @@ moves along a trajectory defined in a trajectory file via Trajectory Editor App
 
 |State Parameter Name(par_name)|Type|Description|
 | :---: | :---: | :---: |
-|trajFileName|FILE|trajectory file name (pick one from Apps->Trajectory->Traj)|
-|forceAxis|VEC_6d|force control axis, since force control can be potentially used, please caliberate sensor before running this primitive|
+|fileName|FILE|name of the file that contains micro-lines|
+|forceAxis|VEC_6i|force axis|
+|preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
   
 Below is the detailed description of each parameter:
-|par_name|trajFileName|
+|par_name|fileName|
 | :---: | :---: |
-|par_desc|trajectory file name (pick one from Apps->Trajectory->Traj)|
+|par_desc|name of the file that contains micro-lines|
 |par_type|FILE|
 |par_unit|$none$|
 |par_required|1|
@@ -1054,17 +1089,51 @@ Below is the detailed description of each parameter:
 
 |par_name|forceAxis|
 | :---: | :---: |
-|par_desc|force control axis, since force control can be potentially used, please caliberate sensor before running this primitive|
-|par_type|VEC_6d|
+|par_desc|force axis|
+|par_type|VEC_6i|
 |par_unit|$none$|
 |par_required|0|
-|par_default|0.0 0.0 0.0 0.0 0.0 0.0|
+|par_default|0 0 1 0 0 0|
+|par_max|1 1 1 1 1 1|
+|par_min|0 0 0 0 0 0|
+
+|par_name|preferJntPos|
+| :---: | :---: |
+|par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|par_type|VEC_7d|
+|par_unit|$deg$|
+|par_required|0|
+|par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
+|par_max|160 130 170 107 170 260 170|
+|par_min|-160 -130 -170 -154 -170 -80 -170|
+|par_freedrive|1|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|10|
+|par_min|1|
+
+|par_name|equalRadius|
+| :---: | :---: |
+|par_desc|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.1|
+|par_max|10.0|
+|par_min|0.0|
 
 #### Primitive State Parameters
 
 |State Parameter Name(par_name)|Type|Description|
 | :---: | :---: | :---: |
 |reachedTarget|BOOL|flag to indicate if the robot has reached target|
+|waypointIndex|INT|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
   
 Below is the detailed description of each parameter:
 |par_name|reachedTarget|
@@ -1072,6 +1141,13 @@ Below is the detailed description of each parameter:
 |par_desc|flag to indicate if the robot has reached target|
 |par_type|BOOL|
 |par_unit|$none$|
+
+|par_name|waypointIndex|
+| :---: | :---: |
+|par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+|par_type|INT|
+|par_unit|$none$|
+|par_min|0|
 
 ### [MoveCompliance](#movecompliance)
 
@@ -1082,7 +1158,7 @@ waypoints. User can specify the maximum velocity acceleration and stiffness scal
 
 #### Primitive Description and Usage
 
-* **Description**: This primitive is used to compliantly move the TCP of the robot to a target pose while passing through various waypoints. Users can specify the maximum velocity acceleration and stiffness scaling of the TCP for the robot to move.
+* **Description**: This primitive is used to compliantly move the TCP of the robot to a target pose while passing through various waypoints. Users can specify the maximum velocity acceleration and stiffness scaling of the flange for the robot to move.
 * **Example Usage:** coming soon
 
 
@@ -1102,6 +1178,7 @@ waypoints. User can specify the maximum velocity acceleration and stiffness scal
 |stiffnessScaling|VEC_6d|tcp stiffness scaling ranged from 0.1 to 1.0, where 0.1 is the smallest stiffness.|
 |enableMaxContactWrench|BOOL|if enable max contact wrench|
 |maxContactWrench|VEC_6d|maximum contact wrench allowed for collision.|
+|nullspaceGradientScaling|VEC_3d|nullspace optmization objective gradient scaling. (linear manipulability, angular manipulability, preferJntPos error norm)|
   
 Below is the detailed description of each parameter:
 |par_name|target|
@@ -1221,6 +1298,16 @@ Below is the detailed description of each parameter:
 |par_max|100.0 100.0 100.0 30.0 30.0 30.0|
 |par_min|20.0 20.0 20.0 6.0 6.0 6.0|
 
+|par_name|nullspaceGradientScaling|
+| :---: | :---: |
+|par_desc|nullspace optmization objective gradient scaling. (linear manipulability, angular manipulability, preferJntPos error norm)|
+|par_type|VEC_3d|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0 0.0 1.0|
+|par_max|5.0 5.0 5.0|
+|par_min|0.0 0.0 1.0|
+
 #### Primitive State Parameters
 
 |State Parameter Name(par_name)|Type|Description|
@@ -1240,6 +1327,182 @@ Below is the detailed description of each parameter:
 |par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
 |par_type|INT|
 |par_unit|$none$|
+
+### [MoveHybrid](#movehybrid)
+
+
+User can specify hybrid force and motion in (TCP) Cartesain space.  
+
+
+#### Primitive Description and Usage
+
+* **Description**: Hybrid motion/force control, while moving straight line between waypoints in motion control directions and exerting force in force control directions.
+* **Example Usage:** 
+
+
+	+ polish on a flat surface along trajectories with straight line segments
+	+ polish along edges with straigh line shape
+
+
+#### Primitive Input Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|target|COORD|target (tcp) pose|
+|waypoints|ARRAY_COORD|waypoints between initial and target poses|
+|wrench|ARRAY_VEC_6d|wrench of waypoints between initial and target poses|
+|forceAxis|VEC_6d|force axis|
+|frictionViscousCoeff|DOUBLE|viscous coefficient of friction|
+|goalWrench|VEC_6d|goal wrench|
+|maxVel|DOUBLE|maximum Cartesian linear velocity|
+|maxRotVel|DOUBLE|maximum Cartesian angular velocity|
+|maxAcc|DOUBLE|maximum Cartesian linear acceleration|
+|maxRotAcc|DOUBLE|maximum Cartesian angular acceleration|
+|maxRadiusCurvature|DOUBLE|maximum radius of curvature when the robot passes through waypoints|
+|scaleWrench|DOUBLE|Scale wrench (0 to 1 where 1 is the the current wrench. Value can exceed 1)|
+|preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+  
+Below is the detailed description of each parameter:
+|par_name|target|
+| :---: | :---: |
+|par_desc|target (tcp) pose|
+|par_type|COORD|
+|par_option|TRAJ::START WORLD::WORLD_ORIGIN|
+|par_unit|$m-deg$|
+|par_required|1|
+|par_freedrive|1|
+
+|par_name|waypoints|
+| :---: | :---: |
+|par_desc|waypoints between initial and target poses|
+|par_type|ARRAY_COORD|
+|par_unit|$m-deg$|
+|par_option|TRAJ::START TRAJ::GOAL TRAJ::PREVIOUSWAYPOINT WORLD::WORLD_ORIGIN|
+|par_required|0|
+|par_freedrive|1|
+
+|par_name|wrench|
+| :---: | :---: |
+|par_desc|wrench of waypoints between initial and target poses|
+|par_type|ARRAY_VEC_6d|
+|par_required|0|
+|par_unit|$N$|
+
+|par_name|forceAxis|
+| :---: | :---: |
+|par_desc|force axis|
+|par_type|VEC_6d|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0 0.0 0.0 0.0 0.0 0.0|
+
+|par_name|frictionViscousCoeff|
+| :---: | :---: |
+|par_desc|viscous coefficient of friction|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0|
+
+|par_name|goalWrench|
+| :---: | :---: |
+|par_desc|goal wrench|
+|par_type|VEC_6d|
+|par_required|1|
+|par_unit|$N$|
+|par_default|0.0 0.0 1.0 0.0 0.0 0.0|
+
+|par_name|maxVel|
+| :---: | :---: |
+|par_desc|maximum Cartesian linear velocity|
+|par_type|DOUBLE|
+|par_required|0|
+|par_unit|$m/s$|
+|par_default|0.2|
+|par_max|2.0|
+|par_min|0.01|
+
+|par_name|maxRotVel|
+| :---: | :---: |
+|par_desc|maximum Cartesian angular velocity|
+|par_type|DOUBLE|
+|par_required|0|
+|par_unit|$rad/s$|
+|par_default|1.0|
+|par_max|4.0|
+|par_min|0.1|
+
+|par_name|maxAcc|
+| :---: | :---: |
+|par_desc|maximum Cartesian linear acceleration|
+|par_type|DOUBLE|
+|par_required|0|
+|par_unit|$m/s^2$|
+|par_default|1.0|
+|par_max|3.0|
+|par_min|0.1|
+
+|par_name|maxRotAcc|
+| :---: | :---: |
+|par_desc|maximum Cartesian angular acceleration|
+|par_type|DOUBLE|
+|par_required|0|
+|par_unit|$rad/s^2$|
+|par_default|2.0|
+|par_max|4.0|
+|par_min|0.1|
+
+|par_name|maxRadiusCurvature|
+| :---: | :---: |
+|par_desc|maximum radius of curvature when the robot passes through waypoints|
+|par_type|DOUBLE|
+|par_required|0|
+|par_unit|$m$|
+|par_default|0.0|
+|par_max|1.0|
+|par_min|0.0|
+
+|par_name|scaleWrench|
+| :---: | :---: |
+|par_desc|Scale wrench (0 to 1 where 1 is the the current wrench. Value can exceed 1)|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1.0|
+|par_max|10.0|
+|par_min|0.0|
+
+|par_name|preferJntPos|
+| :---: | :---: |
+|par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|par_type|VEC_7d|
+|par_unit|$deg$|
+|par_required|0|
+|par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
+|par_freedrive|1|
+
+#### Primitive State Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|reachedTarget|BOOL|flag to indicate if the robot has reached target|
+|waypointIndex|INT|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+  
+Below is the detailed description of each parameter:
+|par_name|reachedTarget|
+| :---: | :---: |
+|par_desc|flag to indicate if the robot has reached target|
+|par_type|BOOL|
+|par_unit|$none$|
+
+|par_name|waypointIndex|
+| :---: | :---: |
+|par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+|par_type|INT|
+|par_unit|$none$|
+|par_min|0|
 
 ## Hybrid Motion/Force
 
@@ -1349,7 +1612,7 @@ Below is the detailed description of each parameter:
 |par_unit|$N$|
 |par_required|0|
 |par_default|5.0|
-|par_max|40|
+|par_max|120|
 |par_min|1.0|
 
 |par_name|fineContactMode|
@@ -1397,7 +1660,7 @@ adjusting its position and orientation to be compliant with environment at the s
 
 |State Parameter Name(par_name)|Type|Description|
 | :---: | :---: | :---: |
-|contactDir|VEC_3d|contact direciton in tool coordinate. It could be 0, 1 or -1 for each axis. If set as 1 or -1, the robot would make force control on corresponding direction|
+|contactDir|VEC_3d|contact direction in tool coordinate. It could be 0, 1 or -1 for each axis. If set as 1 or -1, the robot would make force control on corresponding direction|
 |alignmentDir|VEC_6i|alignment direction in tool coordinate. It could be 0 or 1 for each axis. if set as 1, the robot would be force compliant in corresponding axis. For example, (0,1,0,1,0,0) means compliant in linear y and rotation x axis|
 |targetForce|DOUBLE|target contact force in tcp coordinate that robot output on pre-set force control axis|
 |deadbandScale|DOUBLE|robot alignment wrench deadband scale. Robot would not adjust its position or orientation when external wrench torque is smaller than this deadband|
@@ -1408,7 +1671,7 @@ adjusting its position and orientation to be compliant with environment at the s
 Below is the detailed description of each parameter:
 |par_name|contactDir|
 | :---: | :---: |
-|par_desc|contact direciton in tool coordinate. It could be 0, 1 or -1 for each axis. If set as 1 or -1, the robot would make force control on corresponding direction|
+|par_desc|contact direction in tool coordinate. It could be 0, 1 or -1 for each axis. If set as 1 or -1, the robot would make force control on corresponding direction|
 |par_type|VEC_3d|
 |par_required|0|
 |par_unit|$none$|
@@ -2647,7 +2910,7 @@ assist parts-mating operations in assembly applications.
 |totalMatingTimes|INT|total number of mating times. if set as 0, robot would run the range one-way for once|
 |matingForce|DOUBLE|force during mating in tcp coordinate|
 |safetyForce|DOUBLE|max force during mating for safety|
-|maxMotionDisInForceDir|DOUBLE|max motion distance in force control direciton, primitive would terminate if exceed this value".|
+|maxMotionDisInForceDir|DOUBLE|max motion distance in force control direction, primitive would terminate if exceed this value".|
   
 Below is the detailed description of each parameter:
 |par_name|matingDir|
@@ -2718,7 +2981,7 @@ Below is the detailed description of each parameter:
 
 |par_name|maxMotionDisInForceDir|
 | :---: | :---: |
-|par_desc|max motion distance in force control direciton, primitive would terminate if exceed this value".|
+|par_desc|max motion distance in force control direction, primitive would terminate if exceed this value".|
 |par_type|DOUBLE|
 |par_unit|$m$|
 |par_min|0.005|
@@ -2763,7 +3026,7 @@ mating operations in assembly applications.
 |totalMatingTimes|INT|total number of mating times. if set as 0, robot would run the range one-way for once|
 |matingForce|DOUBLE|force during rub mating in tcp coordinate|
 |safetyForce|DOUBLE|max force during mating for safety|
-|maxMotionDisInForceDir|DOUBLE|max motion distance in force control direciton, primitive would terminate if exceed this value".|
+|maxMotionDisInForceDir|DOUBLE|max motion distance in force control direction, primitive would terminate if exceed this value".|
   
 Below is the detailed description of each parameter:
 |par_name|matingDir|
@@ -2834,7 +3097,7 @@ Below is the detailed description of each parameter:
 
 |par_name|maxMotionDisInForceDir|
 | :---: | :---: |
-|par_desc|max motion distance in force control direciton, primitive would terminate if exceed this value".|
+|par_desc|max motion distance in force control direction, primitive would terminate if exceed this value".|
 |par_type|DOUBLE|
 |par_unit|$m$|
 |par_min|0.005|
@@ -2873,7 +3136,7 @@ motion.
 
 |State Parameter Name(par_name)|Type|Description|
 | :---: | :---: | :---: |
-|insertDir|TYPE|insert direciton in tool coordinate.|
+|insertDir|TYPE|insert direction in tool coordinate.|
 |alignmentDir|VEC_6i|alignment direction in tool coordinate. It could be 0 or 1 for each axis. if set as 1, the robot would be force compliant in corresponding axis. For example, (0,1,0,1,0,0) means compliant in linear y and rotation x axis|
 |maxContactForce|DOUBLE|maximum contact force between robot and environment. Robot would stop insertion if contact force exceed this value, and adjust its position and orientation if needed|
 |deadbandScale|DOUBLE|robot alignment wrench deadband scale. 0 means no deadband. Robot would not adjust its position or orientation when external wrench is smaller than deadband|
@@ -2883,7 +3146,7 @@ motion.
 Below is the detailed description of each parameter:
 |par_name|insertDir|
 | :---: | :---: |
-|par_desc|insert direciton in tool coordinate.|
+|par_desc|insert direction in tool coordinate.|
 |par_type|TYPE|
 |par_required|1|
 |par_unit|$none$|
@@ -2983,7 +3246,7 @@ This primitive uses hybrid motion-force control to repeatedly move along a zigza
 |totalMatingTimes|INT|total number of mating times. if set as 0, robot would run the range one-way for once|
 |matingForce|DOUBLE|force during mating in tcp coordinate|
 |safetyForce|DOUBLE|max force during mating for safety|
-|maxMotionDisInForceDir|DOUBLE|max motion distance in force control direciton, primitive would terminate if exceed this value".|
+|maxMotionDisInForceDir|DOUBLE|max motion distance in force control direction, primitive would terminate if exceed this value".|
 |rasterRange|DOUBLE|raster range|
 |maxRasterVel|DOUBLE|max raster velocity|
 |rasterDir|VEC_3d|raster slide direction in tcp coordiante,|
@@ -3057,7 +3320,7 @@ Below is the detailed description of each parameter:
 
 |par_name|maxMotionDisInForceDir|
 | :---: | :---: |
-|par_desc|max motion distance in force control direciton, primitive would terminate if exceed this value".|
+|par_desc|max motion distance in force control direction, primitive would terminate if exceed this value".|
 |par_type|DOUBLE|
 |par_unit|$m$|
 |par_min|0.005|
@@ -3254,12 +3517,13 @@ Below is the detailed description of each parameter:
 ### [Polish](#polish)
 
 
-Executing composed move command in hybrid mode: MOVL, MOVC and MOVS  
+Execute unified motion and force control in polish based on torque mode  
 
 
 #### Primitive Description and Usage
 
 * For polishing applications, users can use this primitive to run composed trajectories to cover the surface or edge of the work piece. The trajectory can be line, spline, circle and some pre-designed patterns. User can specify the contact forces between the robot and work piece in one or multiple directions.
+* This primitive performs based on torque-mode so that it behaves well in accuracy of force control but lack of stiffness of motion control.
 
 
 #### Primitive Input Parameters
@@ -3277,6 +3541,8 @@ Executing composed move command in hybrid mode: MOVL, MOVC and MOVS
 |maxForceVel|DOUBLE|maximum force transition velocity|
 |maxForceAcc|DOUBLE|maximum force transition acceleration|
 |frictionViscousCoeff|DOUBLE|viscous coefficient of friction|
+|edgeLearntTrajForceCtrlDir|INT|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|edgeLearntTrajFrame|BOOL|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
   
 Below is the detailed description of each parameter:
 |par_name|fileName|
@@ -3304,8 +3570,8 @@ Below is the detailed description of each parameter:
 |par_unit|$deg$|
 |par_required|0|
 |par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
-|par_max|160 130 170 107 170 260 170|
-|par_min|-160 -130 -170 -154 -170 -80 -170|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
 |par_freedrive|1|
 
 |par_name|targetTolLevel|
@@ -3315,7 +3581,7 @@ Below is the detailed description of each parameter:
 |par_unit|$none$|
 |par_required|0|
 |par_default|3|
-|par_max|10|
+|par_max|25|
 |par_min|1|
 
 |par_name|equalRadius|
@@ -3386,6 +3652,22 @@ Below is the detailed description of each parameter:
 |par_required|0|
 |par_default|0.0|
 
+|par_name|edgeLearntTrajForceCtrlDir|
+| :---: | :---: |
+|par_desc|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+
+|par_name|edgeLearntTrajFrame|
+| :---: | :---: |
+|par_desc|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
 #### Primitive State Parameters
 
 |State Parameter Name(par_name)|Type|Description|
@@ -3410,12 +3692,12 @@ Below is the detailed description of each parameter:
 ### [PolishStiff](#polishstiff)
 
 
-Executing composed move command in hybrid mode: MOVL, MOVC and MOVS  
+Execute unified motion and force control in polish based on position mode  
 
 
 #### Primitive Description and Usage
 
-* 
+* This primitive is used to conduct polishing as PT\_Polish, and it performs based on position-mode so that it behaves well in stiffness of motion control but lack of accuracy of force control.
 
 
 #### Primitive Input Parameters
@@ -3434,6 +3716,8 @@ Executing composed move command in hybrid mode: MOVL, MOVC and MOVS
 |maxForceVel|DOUBLE|maximum force transition velocity|
 |maxForceAcc|DOUBLE|maximum force transition acceleration|
 |frictionViscousCoeff|DOUBLE|viscous coefficient of friction|
+|edgeLearntTrajForceCtrlDir|INT|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|edgeLearntTrajFrame|BOOL|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
   
 Below is the detailed description of each parameter:
 |par_name|fileName|
@@ -3472,7 +3756,7 @@ Below is the detailed description of each parameter:
 |par_unit|$none$|
 |par_required|0|
 |par_default|3|
-|par_max|10|
+|par_max|25|
 |par_min|1|
 
 |par_name|contactAngCtrlEnable|
@@ -3551,6 +3835,22 @@ Below is the detailed description of each parameter:
 |par_required|0|
 |par_default|0.0|
 
+|par_name|edgeLearntTrajForceCtrlDir|
+| :---: | :---: |
+|par_desc|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+
+|par_name|edgeLearntTrajFrame|
+| :---: | :---: |
+|par_desc|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
 #### Primitive State Parameters
 
 |State Parameter Name(par_name)|Type|Description|
@@ -3575,7 +3875,7 @@ Below is the detailed description of each parameter:
 ### [PolishStiffer](#polishstiffer)
 
 
-Executing composed move command in hybrid mode: MOVL, MOVC and MOVS  
+Execute unified motion and force control in polish based on most stiff position mode  
 
 
 #### Primitive Description and Usage
@@ -3589,23 +3889,12 @@ Executing composed move command in hybrid mode: MOVL, MOVC and MOVS
 | :---: | :---: | :---: |
 |fileName|FILE|name of the file that contains micro-lines|
 |preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
 |normalDir|INT|normal direction/force control direction|
 |reverseTrajectory|BOOL|reverse trajectory or not|
 |tcpFCFrame|BOOL|whether use tcp frame or identified frame, false for identified frame|
 |forceAxis|VEC_6i|force axis|
 |ffRatio|DOUBLE|Feedforward force ratio for force control|
-|useILC|BOOL|Use ILC or not".|
-|usePreResult|BOOL|Use previous learnt result for force controller. if true, no more iterative learning update".|
-|stopILCUpdate|BOOL|Stop ILC update".|
-|ILCForwardSteps|INT|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
-|ILCFile|STRING|file to read or store ILC result|
-|learningRatePos|DOUBLE|Iterative initial learning rate pos|
-|learningRateVel|DOUBLE|Iterative initial learning rate vel|
-|learningRateAcc|DOUBLE|Iterative initial learning rate acc|
-|DecayRatePos|DOUBLE|Iterative learning rate decay rate pos|
-|DecayRateVel|DOUBLE|Iterative learning rate decay rate vel|
-|DecayRateAcc|DOUBLE|Iterative learning rate decay rate acc|
-|LearningRateType|INT|Iterative learning rate scheduler type|
 |trajTranslation|BOOL|Use trajectory translation".|
 |equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
 |maxPathJerk|DOUBLE|maximum jerk along the path|
@@ -3630,8 +3919,18 @@ Below is the detailed description of each parameter:
 |par_unit|$deg$|
 |par_required|0|
 |par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
-|par_max|160 130 170 107 170 260 170|
-|par_min|-160 -130 -170 -154 -170 -80 -170|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|25|
+|par_min|1|
 
 |par_name|normalDir|
 | :---: | :---: |
@@ -3675,129 +3974,6 @@ Below is the detailed description of each parameter:
 |par_required|0|
 |par_default|1.0|
 |par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|useILC|
-| :---: | :---: |
-|par_desc|Use ILC or not".|
-|par_type|BOOL|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0|
-|par_input_type|KEYIN|
-
-|par_name|usePreResult|
-| :---: | :---: |
-|par_desc|Use previous learnt result for force controller. if true, no more iterative learning update".|
-|par_type|BOOL|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0|
-|par_input_type|KEYIN|
-
-|par_name|stopILCUpdate|
-| :---: | :---: |
-|par_desc|Stop ILC update".|
-|par_type|BOOL|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0|
-|par_input_type|KEYIN|
-
-|par_name|ILCForwardSteps|
-| :---: | :---: |
-|par_desc|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
-|par_type|INT|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0|
-|par_max|200|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|ILCFile|
-| :---: | :---: |
-|par_desc|file to read or store ILC result|
-|par_type|STRING|
-|par_unit|$none$|
-|par_required|1|
-|par_input_type|KEYIN|
-
-|par_name|learningRatePos|
-| :---: | :---: |
-|par_desc|Iterative initial learning rate pos|
-|par_type|DOUBLE|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0.3|
-|par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|learningRateVel|
-| :---: | :---: |
-|par_desc|Iterative initial learning rate vel|
-|par_type|DOUBLE|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0.3|
-|par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|learningRateAcc|
-| :---: | :---: |
-|par_desc|Iterative initial learning rate acc|
-|par_type|DOUBLE|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0.3|
-|par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|DecayRatePos|
-| :---: | :---: |
-|par_desc|Iterative learning rate decay rate pos|
-|par_type|DOUBLE|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0.015|
-|par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|DecayRateVel|
-| :---: | :---: |
-|par_desc|Iterative learning rate decay rate vel|
-|par_type|DOUBLE|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0.015|
-|par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|DecayRateAcc|
-| :---: | :---: |
-|par_desc|Iterative learning rate decay rate acc|
-|par_type|DOUBLE|
-|par_unit|$none$|
-|par_required|0|
-|par_default|0.015|
-|par_max|1.0|
-|par_min|0|
-|par_input_type|KEYIN|
-
-|par_name|LearningRateType|
-| :---: | :---: |
-|par_desc|Iterative learning rate scheduler type|
-|par_type|INT|
-|par_unit|$none$|
-|par_required|0|
-|par_default|1|
-|par_max|2|
 |par_min|0|
 |par_input_type|KEYIN|
 
@@ -3869,6 +4045,1211 @@ Below is the detailed description of each parameter:
 |par_default|1000.0|
 |par_max|100000.0|
 |par_min|100.0|
+
+#### Primitive State Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|reachedTarget|BOOL|flag to indicate if the robot has reached target|
+|waypointIndex|INT|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+  
+Below is the detailed description of each parameter:
+|par_name|reachedTarget|
+| :---: | :---: |
+|par_desc|flag to indicate if the robot has reached target|
+|par_type|BOOL|
+|par_unit|$none$|
+
+|par_name|waypointIndex|
+| :---: | :---: |
+|par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+|par_type|INT|
+|par_unit|$none$|
+|par_min|0|
+
+### [PolishILC](#polishilc)
+
+
+Execute primitive [Polish](#polish) added with interactive learning control  
+
+
+
+#### Primitive Input Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|fileName|FILE|name of the file that contains micro-lines|
+|forceAxis|VEC_6i|force axis|
+|preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|enableILC|BOOL|enable ILC or not".|
+|enableILCTraining|BOOL|enable ILC training or not".|
+|restartILCTraining|BOOL|restart ILC training or not".|
+|learningRate|DOUBLE|Iterative initial learning rate|
+|decayRate|DOUBLE|Iterative learning rate decay rate|
+|learningRateType|INT|Iterative learning rate scheduler type|
+|ILCForwardSteps|INT|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
+|ILCFile|STRING|file to read or store ILC result|
+|equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|maxPathJerk|DOUBLE|maximum jerk along the path|
+|maxCornerAcc|DOUBLE|maximum acceleration at corner|
+|maxCornerJerk|DOUBLE|maximum jerk at corner|
+|maxForceVel|DOUBLE|maximum force transition velocity|
+|maxForceAcc|DOUBLE|maximum force transition acceleration|
+|frictionViscousCoeff|DOUBLE|viscous coefficient of friction|
+|edgeLearntTrajForceCtrlDir|INT|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|edgeLearntTrajFrame|BOOL|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
+  
+Below is the detailed description of each parameter:
+|par_name|fileName|
+| :---: | :---: |
+|par_desc|name of the file that contains micro-lines|
+|par_type|FILE|
+|par_unit|$none$|
+|par_required|1|
+|par_option|.traj|
+
+|par_name|forceAxis|
+| :---: | :---: |
+|par_desc|force axis|
+|par_type|VEC_6i|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0 0 1 0 0 0|
+|par_max|1 1 1 1 1 1|
+|par_min|0 0 0 0 0 0|
+
+|par_name|preferJntPos|
+| :---: | :---: |
+|par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|par_type|VEC_7d|
+|par_unit|$deg$|
+|par_required|0|
+|par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
+|par_freedrive|1|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|25|
+|par_min|1|
+
+|par_name|enableILC|
+| :---: | :---: |
+|par_desc|enable ILC or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|enableILCTraining|
+| :---: | :---: |
+|par_desc|enable ILC training or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|restartILCTraining|
+| :---: | :---: |
+|par_desc|restart ILC training or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRate|
+| :---: | :---: |
+|par_desc|Iterative initial learning rate|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.3|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|decayRate|
+| :---: | :---: |
+|par_desc|Iterative learning rate decay rate|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.015|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRateType|
+| :---: | :---: |
+|par_desc|Iterative learning rate scheduler type|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+|par_max|2|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|ILCForwardSteps|
+| :---: | :---: |
+|par_desc|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_max|200|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|ILCFile|
+| :---: | :---: |
+|par_desc|file to read or store ILC result|
+|par_type|STRING|
+|par_unit|$none$|
+|par_required|1|
+|par_input_type|KEYIN|
+
+|par_name|equalRadius|
+| :---: | :---: |
+|par_desc|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.1|
+|par_max|10.0|
+|par_min|0.0|
+
+|par_name|maxPathJerk|
+| :---: | :---: |
+|par_desc|maximum jerk along the path|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|90.0|
+
+|par_name|maxCornerAcc|
+| :---: | :---: |
+|par_desc|maximum acceleration at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^2$|
+|par_required|0|
+|par_default|2.0|
+|par_max|6.0|
+|par_min|0.5|
+
+|par_name|maxCornerJerk|
+| :---: | :---: |
+|par_desc|maximum jerk at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|200.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceVel|
+| :---: | :---: |
+|par_desc|maximum force transition velocity|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceAcc|
+| :---: | :---: |
+|par_desc|maximum force transition acceleration|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1000.0|
+|par_max|100000.0|
+|par_min|100.0|
+
+|par_name|frictionViscousCoeff|
+| :---: | :---: |
+|par_desc|viscous coefficient of friction|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0|
+
+|par_name|edgeLearntTrajForceCtrlDir|
+| :---: | :---: |
+|par_desc|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+
+|par_name|edgeLearntTrajFrame|
+| :---: | :---: |
+|par_desc|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
+#### Primitive State Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|reachedTarget|BOOL|flag to indicate if the robot has reached target|
+|waypointIndex|INT|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+  
+Below is the detailed description of each parameter:
+|par_name|reachedTarget|
+| :---: | :---: |
+|par_desc|flag to indicate if the robot has reached target|
+|par_type|BOOL|
+|par_unit|$none$|
+
+|par_name|waypointIndex|
+| :---: | :---: |
+|par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+|par_type|INT|
+|par_unit|$none$|
+|par_min|0|
+
+### [PolishStiffILC](#polishstiffilc)
+
+
+Execute primitive [PolishStiff](#polishstiff) added with interactive learning control  
+
+
+
+#### Primitive Input Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|fileName|FILE|name of the file that contains micro-lines|
+|forceAxis|VEC_6i|force axis|
+|preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|contactAngCtrlEnable|BOOL|whether control contact angle during polish|
+|enableILC|BOOL|enable ILC or not".|
+|enableILCTraining|BOOL|enable ILC training or not".|
+|restartILCTraining|BOOL|restart ILC training or not".|
+|learningRate|DOUBLE|Iterative initial learning rate|
+|decayRate|DOUBLE|Iterative learning rate decay rate|
+|learningRateType|INT|Iterative learning rate scheduler type|
+|ILCForwardSteps|INT|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
+|ILCFile|STRING|file to read or store ILC result|
+|equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|maxPathJerk|DOUBLE|maximum jerk along the path|
+|maxCornerAcc|DOUBLE|maximum acceleration at corner|
+|maxCornerJerk|DOUBLE|maximum jerk at corner|
+|maxForceVel|DOUBLE|maximum force transition velocity|
+|maxForceAcc|DOUBLE|maximum force transition acceleration|
+|frictionViscousCoeff|DOUBLE|viscous coefficient of friction|
+|edgeLearntTrajForceCtrlDir|INT|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|edgeLearntTrajFrame|BOOL|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
+  
+Below is the detailed description of each parameter:
+|par_name|fileName|
+| :---: | :---: |
+|par_desc|name of the file that contains micro-lines|
+|par_type|FILE|
+|par_unit|$none$|
+|par_required|1|
+|par_option|.traj|
+
+|par_name|forceAxis|
+| :---: | :---: |
+|par_desc|force axis|
+|par_type|VEC_6i|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0 0 1 0 0 0|
+|par_max|1 1 1 1 1 1|
+|par_min|0 0 0 0 0 0|
+
+|par_name|preferJntPos|
+| :---: | :---: |
+|par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|par_type|VEC_7d|
+|par_unit|$deg$|
+|par_required|0|
+|par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
+|par_freedrive|1|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|25|
+|par_min|1|
+
+|par_name|contactAngCtrlEnable|
+| :---: | :---: |
+|par_desc|whether control contact angle during polish|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
+|par_name|enableILC|
+| :---: | :---: |
+|par_desc|enable ILC or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|enableILCTraining|
+| :---: | :---: |
+|par_desc|enable ILC training or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|restartILCTraining|
+| :---: | :---: |
+|par_desc|restart ILC training or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRate|
+| :---: | :---: |
+|par_desc|Iterative initial learning rate|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.3|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|decayRate|
+| :---: | :---: |
+|par_desc|Iterative learning rate decay rate|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.015|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRateType|
+| :---: | :---: |
+|par_desc|Iterative learning rate scheduler type|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+|par_max|2|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|ILCForwardSteps|
+| :---: | :---: |
+|par_desc|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_max|200|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|ILCFile|
+| :---: | :---: |
+|par_desc|file to read or store ILC result|
+|par_type|STRING|
+|par_unit|$none$|
+|par_required|1|
+|par_input_type|KEYIN|
+
+|par_name|equalRadius|
+| :---: | :---: |
+|par_desc|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.1|
+|par_max|10.0|
+|par_min|0.0|
+
+|par_name|maxPathJerk|
+| :---: | :---: |
+|par_desc|maximum jerk along the path|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|90.0|
+
+|par_name|maxCornerAcc|
+| :---: | :---: |
+|par_desc|maximum acceleration at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^2$|
+|par_required|0|
+|par_default|2.0|
+|par_max|6.0|
+|par_min|0.5|
+
+|par_name|maxCornerJerk|
+| :---: | :---: |
+|par_desc|maximum jerk at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|200.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceVel|
+| :---: | :---: |
+|par_desc|maximum force transition velocity|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceAcc|
+| :---: | :---: |
+|par_desc|maximum force transition acceleration|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1000.0|
+|par_max|100000.0|
+|par_min|100.0|
+
+|par_name|frictionViscousCoeff|
+| :---: | :---: |
+|par_desc|viscous coefficient of friction|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0|
+
+|par_name|edgeLearntTrajForceCtrlDir|
+| :---: | :---: |
+|par_desc|Force control direction, only used for edge learnt traj force ctrl frame, -1 or 1|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+
+|par_name|edgeLearntTrajFrame|
+| :---: | :---: |
+|par_desc|Whether to use edge learnt trajectory force ctrl frame or normal tcp force ctrl frame, false for normal tcp frame|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
+#### Primitive State Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|reachedTarget|BOOL|flag to indicate if the robot has reached target|
+|waypointIndex|INT|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+  
+Below is the detailed description of each parameter:
+|par_name|reachedTarget|
+| :---: | :---: |
+|par_desc|flag to indicate if the robot has reached target|
+|par_type|BOOL|
+|par_unit|$none$|
+
+|par_name|waypointIndex|
+| :---: | :---: |
+|par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+|par_type|INT|
+|par_unit|$none$|
+|par_min|0|
+
+### [PolishStifferILC](#polishstifferilc)
+
+
+Execute primitive [PolishStiffer](#polishstiffer) added with interactive learning control  
+
+
+
+#### Primitive Input Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|fileName|FILE|name of the file that contains micro-lines|
+|preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|normalDir|INT|normal direction/force control direction|
+|reverseTrajectory|BOOL|reverse trajectory or not|
+|tcpFCFrame|BOOL|whether use tcp frame or identified frame, false for identified frame|
+|forceAxis|VEC_6i|force axis|
+|ffRatio|DOUBLE|Feedforward force ratio for force control|
+|trajTranslation|BOOL|Use trajectory translation".|
+|enableILC|BOOL|enable ILC or not".|
+|enableILCTraining|BOOL|enable ILC training or not".|
+|restartILCTraining|BOOL|restart ILC training or not".|
+|learningRatePos|DOUBLE|Iterative initial learning rate pos|
+|learningRateVel|DOUBLE|Iterative initial learning rate vel|
+|learningRateAcc|DOUBLE|Iterative initial learning rate acc|
+|decayRatePos|DOUBLE|Iterative learning rate decay rate pos|
+|decayRateVel|DOUBLE|Iterative learning rate decay rate vel|
+|decayRateAcc|DOUBLE|Iterative learning rate decay rate acc|
+|learningRateType|INT|Iterative learning rate scheduler type|
+|ILCForwardSteps|INT|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
+|ILCFile|STRING|file to read or store ILC result|
+|equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|maxPathJerk|DOUBLE|maximum jerk along the path|
+|maxCornerAcc|DOUBLE|maximum acceleration at corner|
+|maxCornerJerk|DOUBLE|maximum jerk at corner|
+|maxForceVel|DOUBLE|maximum force transition velocity|
+|maxForceAcc|DOUBLE|maximum force transition acceleration|
+  
+Below is the detailed description of each parameter:
+|par_name|fileName|
+| :---: | :---: |
+|par_desc|name of the file that contains micro-lines|
+|par_type|FILE|
+|par_unit|$none$|
+|par_required|1|
+|par_option|.traj|
+
+|par_name|preferJntPos|
+| :---: | :---: |
+|par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|par_type|VEC_7d|
+|par_unit|$deg$|
+|par_required|0|
+|par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|25|
+|par_min|1|
+
+|par_name|normalDir|
+| :---: | :---: |
+|par_desc|normal direction/force control direction|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+
+|par_name|reverseTrajectory|
+| :---: | :---: |
+|par_desc|reverse trajectory or not|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
+|par_name|tcpFCFrame|
+| :---: | :---: |
+|par_desc|whether use tcp frame or identified frame, false for identified frame|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
+|par_name|forceAxis|
+| :---: | :---: |
+|par_desc|force axis|
+|par_type|VEC_6i|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0 1 0 0 0 0|
+|par_max|1 1 1 1 1 1|
+|par_min|0 0 0 0 0 0|
+
+|par_name|ffRatio|
+| :---: | :---: |
+|par_desc|Feedforward force ratio for force control|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1.0|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|trajTranslation|
+| :---: | :---: |
+|par_desc|Use trajectory translation".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|enableILC|
+| :---: | :---: |
+|par_desc|enable ILC or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|enableILCTraining|
+| :---: | :---: |
+|par_desc|enable ILC training or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|restartILCTraining|
+| :---: | :---: |
+|par_desc|restart ILC training or not".|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRatePos|
+| :---: | :---: |
+|par_desc|Iterative initial learning rate pos|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.3|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRateVel|
+| :---: | :---: |
+|par_desc|Iterative initial learning rate vel|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.3|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRateAcc|
+| :---: | :---: |
+|par_desc|Iterative initial learning rate acc|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.3|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|decayRatePos|
+| :---: | :---: |
+|par_desc|Iterative learning rate decay rate pos|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.015|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|decayRateVel|
+| :---: | :---: |
+|par_desc|Iterative learning rate decay rate vel|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.015|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|decayRateAcc|
+| :---: | :---: |
+|par_desc|Iterative learning rate decay rate acc|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.015|
+|par_max|1.0|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|learningRateType|
+| :---: | :---: |
+|par_desc|Iterative learning rate scheduler type|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1|
+|par_max|2|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|ILCForwardSteps|
+| :---: | :---: |
+|par_desc|Forward step that ILC would take to predict the disturbance. This is mainly to compensate force error when robot reverse its direction|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+|par_max|200|
+|par_min|0|
+|par_input_type|KEYIN|
+
+|par_name|ILCFile|
+| :---: | :---: |
+|par_desc|file to read or store ILC result|
+|par_type|STRING|
+|par_unit|$none$|
+|par_required|1|
+|par_input_type|KEYIN|
+
+|par_name|equalRadius|
+| :---: | :---: |
+|par_desc|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.1|
+|par_max|10.0|
+|par_min|0.0|
+
+|par_name|maxPathJerk|
+| :---: | :---: |
+|par_desc|maximum jerk along the path|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|90.0|
+
+|par_name|maxCornerAcc|
+| :---: | :---: |
+|par_desc|maximum acceleration at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^2$|
+|par_required|0|
+|par_default|2.0|
+|par_max|6.0|
+|par_min|0.5|
+
+|par_name|maxCornerJerk|
+| :---: | :---: |
+|par_desc|maximum jerk at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|200.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceVel|
+| :---: | :---: |
+|par_desc|maximum force transition velocity|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceAcc|
+| :---: | :---: |
+|par_desc|maximum force transition acceleration|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1000.0|
+|par_max|100000.0|
+|par_min|100.0|
+
+#### Primitive State Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|reachedTarget|BOOL|flag to indicate if the robot has reached target|
+|waypointIndex|INT|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+  
+Below is the detailed description of each parameter:
+|par_name|reachedTarget|
+| :---: | :---: |
+|par_desc|flag to indicate if the robot has reached target|
+|par_type|BOOL|
+|par_unit|$none$|
+
+|par_name|waypointIndex|
+| :---: | :---: |
+|par_desc|Index of the current waypoint the robot just passed. The waypoint index is 0 indexed where the 0th index is the initial pose|
+|par_type|INT|
+|par_unit|$none$|
+|par_min|0|
+
+### [EdgeLearning](#edgelearning)
+
+
+Execute trajectory learning based on edge of object  
+
+
+
+#### Primitive Input Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|normalDir|INT|Force control direction, 1 or -1|
+|initMotionCtrlDir|VEC_3d|init motion direction in tcp coordinate. It should perpendicular to init force control direction.|
+|maxPosError|DOUBLE|max position error between the measurement pose and the target pose|
+|targetForce|DOUBLE|target force to control on the control force axis|
+|maxTcpForce|DOUBLE|total max tcp force|
+|motionVel|DOUBLE|motion velocity for the polish|
+|maxEdgeTraversalDistance|DOUBLE|polish distance before robot terminates this primitive|
+|maxEdgeTraversalTime|DOUBLE|polish duration before robot terminates this primitive|
+|velAdjustRatio|DOUBLE|motion velocity based polish angle adjustment ratio, between 0 and 1|
+|estimatedFriction|DOUBLE|estimated friction force, force based polish angle adjustment utilizes this force|
+|targetTolLevel|INT|target tol level|
+|maxAngAdjustVel|DOUBLE|max angular velocity for robot to adjust it control direction|
+|maxFreeMotionDuration|DOUBLE|terminate if duration of NO CONTACT exceed this value|
+|waypointDist|DOUBLE|waypoint distance to record a waypoint for the trajectory|
+|recordedTrajVel|DOUBLE|recorded path waypoints commanded velocity|
+|recordTrajFlag|BOOL|waypoint distance to record a waypoint for the trajectory|
+|pathFileName|STRING|save to file name for the recorded trajectory path|
+  
+Below is the detailed description of each parameter:
+|par_name|normalDir|
+| :---: | :---: |
+|par_desc|Force control direction, 1 or -1|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|1|
+|par_default|1|
+
+|par_name|initMotionCtrlDir|
+| :---: | :---: |
+|par_desc|init motion direction in tcp coordinate. It should perpendicular to init force control direction.|
+|par_type|VEC_3d|
+|par_unit|$none$|
+|par_required|1|
+
+|par_name|maxPosError|
+| :---: | :---: |
+|par_desc|max position error between the measurement pose and the target pose|
+|par_type|DOUBLE|
+|par_unit|$m$|
+|par_required|0|
+|par_default|0.1|
+
+|par_name|targetForce|
+| :---: | :---: |
+|par_desc|target force to control on the control force axis|
+|par_type|DOUBLE|
+|par_unit|$N$|
+|par_required|0|
+|par_default|-10|
+
+|par_name|maxTcpForce|
+| :---: | :---: |
+|par_desc|total max tcp force|
+|par_type|DOUBLE|
+|par_unit|$N$|
+|par_required|0|
+|par_default|50|
+
+|par_name|motionVel|
+| :---: | :---: |
+|par_desc|motion velocity for the polish|
+|par_type|DOUBLE|
+|par_unit|$m/s$|
+|par_required|0|
+|par_default|0.05|
+
+|par_name|maxEdgeTraversalDistance|
+| :---: | :---: |
+|par_desc|polish distance before robot terminates this primitive|
+|par_type|DOUBLE|
+|par_unit|$m$|
+|par_required|0|
+|par_default|0.2|
+
+|par_name|maxEdgeTraversalTime|
+| :---: | :---: |
+|par_desc|polish duration before robot terminates this primitive|
+|par_type|DOUBLE|
+|par_unit|$s$|
+|par_required|0|
+|par_default|7|
+
+|par_name|velAdjustRatio|
+| :---: | :---: |
+|par_desc|motion velocity based polish angle adjustment ratio, between 0 and 1|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1.0|
+
+|par_name|estimatedFriction|
+| :---: | :---: |
+|par_desc|estimated friction force, force based polish angle adjustment utilizes this force|
+|par_type|DOUBLE|
+|par_unit|$N$|
+|par_required|0|
+|par_default|2|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|target tol level|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|2|
+
+|par_name|maxAngAdjustVel|
+| :---: | :---: |
+|par_desc|max angular velocity for robot to adjust it control direction|
+|par_type|DOUBLE|
+|par_unit|$deg/s$|
+|par_required|0|
+|par_default|100.0|
+
+|par_name|maxFreeMotionDuration|
+| :---: | :---: |
+|par_desc|terminate if duration of NO CONTACT exceed this value|
+|par_type|DOUBLE|
+|par_unit|$s$|
+|par_required|0|
+|par_default|2.0|
+
+|par_name|waypointDist|
+| :---: | :---: |
+|par_desc|waypoint distance to record a waypoint for the trajectory|
+|par_type|DOUBLE|
+|par_unit|$mm$|
+|par_required|0|
+|par_default|7.0|
+
+|par_name|recordedTrajVel|
+| :---: | :---: |
+|par_desc|recorded path waypoints commanded velocity|
+|par_type|DOUBLE|
+|par_unit|$m/s$|
+|par_required|0|
+|par_default|0.05|
+
+|par_name|recordTrajFlag|
+| :---: | :---: |
+|par_desc|waypoint distance to record a waypoint for the trajectory|
+|par_type|BOOL|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0|
+
+|par_name|pathFileName|
+| :---: | :---: |
+|par_desc|save to file name for the recorded trajectory path|
+|par_type|STRING|
+|par_unit|$none$|
+|par_required|0|
+|par_default|EdgeLearntTraj|
+
+### [SurfaceLearning](#surfacelearning)
+
+
+Execute trajectory learning based on surface of object  
+
+
+
+#### Primitive Input Parameters
+
+|State Parameter Name(par_name)|Type|Description|
+| :---: | :---: | :---: |
+|fileName|FILE|name of the file that contains micro-lines|
+|forceAxis|VEC_6i|force axis|
+|preferJntPos|VEC_7d|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|targetTolLevel|INT|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|waypointDist|DOUBLE|trajectory acquire step|
+|pathFileName|STRING|name of the file that output for trajectory|
+|maxLearntVel|DOUBLE|maximum learning velocity|
+|recordedTrajVel|DOUBLE|recorded path waypoints commanded velocity|
+|equalRadius|DOUBLE|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|maxPathJerk|DOUBLE|maximum jerk along the path|
+|maxCornerAcc|DOUBLE|maximum acceleration at corner|
+|maxCornerJerk|DOUBLE|maximum jerk at corner|
+|maxForceVel|DOUBLE|maximum force transition velocity|
+|maxForceAcc|DOUBLE|maximum force transition acceleration|
+|frictionViscousCoeff|DOUBLE|viscous coefficient of friction|
+  
+Below is the detailed description of each parameter:
+|par_name|fileName|
+| :---: | :---: |
+|par_desc|name of the file that contains micro-lines|
+|par_type|FILE|
+|par_required|1|
+|par_unit|$none$|
+|par_option|.traj|
+
+|par_name|forceAxis|
+| :---: | :---: |
+|par_desc|force axis|
+|par_type|VEC_6i|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0 0 1 1 1 0|
+|par_max|1 1 1 1 1 1|
+|par_min|0 0 0 0 0 0|
+
+|par_name|preferJntPos|
+| :---: | :---: |
+|par_desc|preferred target joint configuration. The robot is compliance with Cartesian constraint while reaching this configuration as close as possible.|
+|par_type|VEC_7d|
+|par_unit|$deg$|
+|par_required|0|
+|par_default|0.0 -40.0 0.0 90.0 0.0 40.0 0.0|
+|par_max|160 130 170 154 170 260 170|
+|par_min|-160 -130 -170 -107 -170 -80 -170|
+|par_freedrive|1|
+
+|par_name|targetTolLevel|
+| :---: | :---: |
+|par_desc|tolerance level of target pose accuracy ranged from 1 to 10, where 1 is the smallest tolerence|
+|par_type|INT|
+|par_unit|$none$|
+|par_required|0|
+|par_default|3|
+|par_max|25|
+|par_min|1|
+
+|par_name|waypointDist|
+| :---: | :---: |
+|par_desc|trajectory acquire step|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|6.0|
+|par_min|6.0|
+
+|par_name|pathFileName|
+| :---: | :---: |
+|par_desc|name of the file that output for trajectory|
+|par_type|STRING|
+|par_unit|$none$|
+|par_required|1|
+|par_default|SurfaceLearntraj|
+
+|par_name|maxLearntVel|
+| :---: | :---: |
+|par_desc|maximum learning velocity|
+|par_type|DOUBLE|
+|par_unit|$m/s$|
+|par_required|0|
+|par_default|0.05|
+|par_max|0.2|
+|par_min|0|
+
+|par_name|recordedTrajVel|
+| :---: | :---: |
+|par_desc|recorded path waypoints commanded velocity|
+|par_type|DOUBLE|
+|par_unit|$m/s$|
+|par_required|0|
+|par_default|0.05|
+
+|par_name|equalRadius|
+| :---: | :---: |
+|par_desc|Convert orientation to linear distance. It standards for the ability that the orientation follows the orientation|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.1|
+|par_max|10.0|
+|par_min|0.0|
+
+|par_name|maxPathJerk|
+| :---: | :---: |
+|par_desc|maximum jerk along the path|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|90.0|
+
+|par_name|maxCornerAcc|
+| :---: | :---: |
+|par_desc|maximum acceleration at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^2$|
+|par_required|0|
+|par_default|2.0|
+|par_max|6.0|
+|par_min|0.5|
+
+|par_name|maxCornerJerk|
+| :---: | :---: |
+|par_desc|maximum jerk at corner|
+|par_type|DOUBLE|
+|par_unit|$m/s^3$|
+|par_required|0|
+|par_default|200.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceVel|
+| :---: | :---: |
+|par_desc|maximum force transition velocity|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|100.0|
+|par_max|10000.0|
+|par_min|10.0|
+
+|par_name|maxForceAcc|
+| :---: | :---: |
+|par_desc|maximum force transition acceleration|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|1000.0|
+|par_max|100000.0|
+|par_min|100.0|
+
+|par_name|frictionViscousCoeff|
+| :---: | :---: |
+|par_desc|viscous coefficient of friction|
+|par_type|DOUBLE|
+|par_unit|$none$|
+|par_required|0|
+|par_default|0.0|
 
 #### Primitive State Parameters
 
